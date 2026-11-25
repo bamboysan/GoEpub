@@ -1,0 +1,54 @@
+# ==============================================================================
+# GoEpub - Android & Gradle .gitignore
+# ==============================================================================
+
+# Local SDK / Environment Paths & Secrets (NEVER commit)
+local.properties
+*.properties.local
+.env
+.env.*
+
+# Signing Keystores & Credentials (NEVER commit)
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.pem
+*.key
+google-services.json
+service-account*.json
+
+# Compiled Binaries & Packages (Published via GitHub Releases instead)
+*.apk
+*.aab
+*.ap_
+*.aab_
+*.dex
+*.class
+
+# Gradle & Build Outputs
+.gradle/
+build/
+**/build/
+out/
+captures/
+.navigation/
+.externalNativeBuild/
+.cxx/
+
+# Android Studio / IntelliJ / VS Code IDE metadata
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+local.xml
+
+# OS & Temp Files
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+*.tmp
+*.bak
+*~

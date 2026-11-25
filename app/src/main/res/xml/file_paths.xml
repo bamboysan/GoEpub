@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <files-path name="translated_books" path="translated/" />
+    <cache-path name="cached_translated_books" path="translated/" />
+    <external-cache-path name="ext_translated_books" path="translated/" />
+</paths>
