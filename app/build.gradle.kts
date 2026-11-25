@@ -13,8 +13,8 @@ android {
         applicationId = "com.goepub.app"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.1.0"
 
         vectorDrawables {
             useSupportLibrary = true
@@ -42,6 +42,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     packaging {
@@ -78,13 +79,13 @@ dependencies {
     // Kotlin Coroutines & Flow
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
 
-    // WorkManager untuk eksekusi terjemahan latar belakang yang tahan banting
+    // WorkManager for reliable background translation
     implementation("androidx.work:work-runtime-ktx:2.9.1")
 
-    // Jsoup untuk manipulasi XHTML/HTML EPUB secara presisi tanpa merusak tag/CSS
+    // Jsoup for safe XHTML/HTML EPUB manipulation
     implementation("org.jsoup:jsoup:1.17.2")
 
-    // Google ML Kit On-Device Translation & Language Identification (Gratis & Offline)
+    // Google ML Kit On-Device Translation & Language Identification (Free & Offline)
     implementation("com.google.mlkit:translate:17.0.3")
     implementation("com.google.mlkit:language-id:17.0.6")
 

@@ -4,8 +4,10 @@
 [![Kotlin](https://img.shields.io/badge/Kotlin-Jetpack%20Compose-0284C7?style=flat-square&logo=kotlin)](https://kotlinlang.org/)
 [![License](https://img.shields.io/badge/License-MIT-F59E0B?style=flat-square)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/bamboysan/GoEpub?style=flat-square&color=10B981&label=Latest%20APK)](https://github.com/bamboysan/GoEpub/releases/latest)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20Developer-FF5E5B?style=flat-square&logo=ko-fi&logoColor=white)](https://ko-fi.com/bamboysan)
+[![Saweria](https://img.shields.io/badge/Saweria-QRIS%20%2F%20E--Wallet-F59E0B?style=flat-square)](https://saweria.co/bamboysan)
 
-**GoEpub** is a fast, lightweight, 100% free, and open-source native Android application built with **Kotlin**, **Jetpack Compose (Material 3)**, and **MVVM architecture** to automatically translate entire **EPUB (EPUB 2 & EPUB 3)** e-books into your preferred language in a single tap — while keeping original HTML/CSS styling, images, covers, and table of contents completely intact.
+**GoEpub** is a fast, lightweight, 100% free, ad-free, and open-source native Android application built with **Kotlin**, **Jetpack Compose (Material 3)**, and **MVVM architecture** to automatically translate entire **EPUB (EPUB 2 & EPUB 3)** e-books into your preferred language in a single tap — while keeping original HTML/CSS styling, images, covers, and table of contents completely intact.
 
 ---
 
@@ -13,12 +15,12 @@
 
 Ready to install on any Android 8.0+ (API 26+) device — no API keys, subscriptions, or sign-ups required:
 
-👉 **[Download GoEpub v1.0.0 APK (Latest Release)](https://github.com/bamboysan/GoEpub/releases/latest/download/GoEpub-v1.0.0.apk)**
+👉 **[Download GoEpub v1.1.0 APK (Latest Release)](https://github.com/bamboysan/GoEpub/releases/latest/download/GoEpub-v1.1.0.apk)**
 
 Or browse all versions on the **[GitHub Releases Page](https://github.com/bamboysan/GoEpub/releases)**.
 
 ### How to Install the `.apk` on Android
-1. Download **`GoEpub-v1.0.0.apk`** on your Android phone using the link above.
+1. Download **`GoEpub-v1.1.0.apk`** on your Android phone using the link above.
 2. Tap the downloaded `.apk` file in your browser or **Files / Downloads** app.
 3. If prompted for security permissions, tap **Settings** and enable **"Allow from this source"** (*Install Unknown Apps / Install from Unknown Sources*).
 4. Tap **Install**, then **Open** to start translating your EPUB books!
@@ -41,6 +43,18 @@ Or browse all versions on the **[GitHub Releases Page](https://github.com/bamboy
   - Clean, bright, minimalist Material 3 UI available in **English (Default)** and **Bahasa Indonesia**, switchable with a single tap in the top bar.
 - **Modular Translation Engine**:
   - Clean `TranslationEngine` interface with `GoogleTranslateManager` (on-device default) and `CloudTranslationEngine` (ready-to-use adapter for Google Cloud Translation API v2).
+
+---
+
+## 💖 Support the Developer
+
+**GoEpub** is 100% free, ad-free, and open-source. If this project helps you read and enjoy more books across languages, consider buying the developer a coffee to support continued maintenance and new features:
+
+- ☕ **Ko-fi (International — PayPal / Credit & Debit Card):** [https://ko-fi.com/bamboysan](https://ko-fi.com/bamboysan)
+- 🇮🇩 **Saweria (Indonesia — QRIS / GoPay / OVO / DANA):** [https://saweria.co/bamboysan](https://saweria.co/bamboysan)
+
+[![Support on Ko-fi](https://img.shields.io/badge/Support%20on%20Ko--fi-bamboysan-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/bamboysan)
+[![Support on Saweria](https://img.shields.io/badge/Support%20on%20Saweria-QRIS%20%26%20E--Wallet-F59E0B?style=for-the-badge)](https://saweria.co/bamboysan)
 
 ---
 
@@ -67,11 +81,13 @@ app/src/main/java/com/goepub/app/
 │       ├── TranslationEngine.kt             # Modular translation engine contract
 │       ├── GoogleTranslateManager.kt        # ML Kit On-Device wrapper + offline model manager
 │       └── CloudTranslationEngine.kt        # Optional Google Cloud Translation API v2 implementation
+├── util/
+│   └── AppConstants.kt                      # Centralized donation & project URLs + safe browser intent
 ├── worker/
 │   └── TranslateEpubWorker.kt               # Foreground CoroutineWorker with live chapter progress
 └── ui/
     ├── components/
-    │   └── GoEpubComponents.kt              # Custom vector brand mark, offline pack & privacy sheets
+    │   └── GoEpubComponents.kt              # Custom vector brand mark, support, offline pack & privacy sheets
     ├── i18n/
     │   └── AppStrings.kt                    # Bilingual UI localization (English default & Indonesian)
     ├── main/

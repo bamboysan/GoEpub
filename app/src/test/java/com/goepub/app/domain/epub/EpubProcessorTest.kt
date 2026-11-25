@@ -3,6 +3,7 @@ package com.goepub.app.domain.epub
 import com.goepub.app.domain.translator.TranslationEngine
 import com.goepub.app.ui.i18n.AppLanguage
 import com.goepub.app.ui.i18n.AppStrings
+import com.goepub.app.util.AppConstants
 import java.io.File
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
@@ -288,6 +289,10 @@ class EpubProcessorTest {
         assertEquals(AppLanguage.EN, AppLanguage.ID.toggle())
         assertEquals("Select EPUB File", AppStrings.forLanguage(AppLanguage.EN).pickEpubButton)
         assertEquals("Pilih File EPUB", AppStrings.forLanguage(AppLanguage.ID).pickEpubButton)
+        assertEquals("https://ko-fi.com/bamboysan", AppConstants.KOFI_URL)
+        assertEquals("https://saweria.co/bamboysan", AppConstants.SAWERIA_URL)
+        assertEquals("GoEpub • Version 1.1.0", AppStrings.ENGLISH.aboutVersionTitleFormat("1.1.0"))
+        assertEquals("GoEpub • Versi 1.1.0", AppStrings.INDONESIAN.aboutVersionTitleFormat("1.1.0"))
     }
 
     private fun buildSyntheticEpub(target: File, entries: Map<String, String>) {

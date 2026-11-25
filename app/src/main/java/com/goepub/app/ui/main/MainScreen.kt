@@ -43,6 +43,7 @@ import androidx.compose.material.icons.outlined.CloudDownload
 import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.ErrorOutline
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.FileOpen
 import androidx.compose.material.icons.outlined.GppGood
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
@@ -113,6 +114,8 @@ import com.goepub.app.ui.components.GoEpubBrandLogo
 import com.goepub.app.ui.components.HeroBookIllustration
 import com.goepub.app.ui.components.OfflineModelsBottomSheet
 import com.goepub.app.ui.components.PrivacyAndAboutBottomSheet
+import com.goepub.app.ui.components.SupportDeveloperBannerCard
+import com.goepub.app.ui.components.SupportDeveloperBottomSheet
 import com.goepub.app.ui.i18n.AppLanguage
 import com.goepub.app.ui.i18n.AppStrings
 import com.goepub.app.ui.theme.GoEpubTheme
@@ -143,6 +146,7 @@ fun MainScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     var showOfflineModelsSheet by rememberSaveable { mutableStateOf(false) }
     var showPrivacySheet by rememberSaveable { mutableStateOf(false) }
+    var showSupportSheet by rememberSaveable { mutableStateOf(false) }
     var pendingSaveFile by remember { mutableStateOf<File?>(null) }
 
     val saveDocumentLauncher = rememberLauncherForActivityResult(
@@ -210,6 +214,15 @@ fun MainScreen(
                             )
                         }
 
+                        // Support / Donate Developer Button
+                        IconButton(onClick = { showSupportSheet = true }) {
+                            Icon(
+                                imageVector = Icons.Outlined.FavoriteBorder,
+                                contentDescription = strings.supportTooltip,
+                                tint = Color(0xFFE11D48)
+                            )
+                        }
+
                         IconButton(
                             onClick = {
                                 viewModel.refreshDownloadedModels()
@@ -254,6 +267,7 @@ fun MainScreen(
                             viewModel.refreshDownloadedModels()
                             showOfflineModelsSheet = true
                         },
+                        onOpenSupport = { showSupportSheet = true },
                         onSelectHistory = viewModel::openHistoryRecord,
                         onDeleteHistory = viewModel::deleteHistoryItem
                     )
@@ -328,8 +342,17 @@ fun MainScreen(
             PrivacyAndAboutBottomSheet(
                 strings = strings,
                 hasHistory = history.isNotEmpty(),
+                onOpenSupport = { showSupportSheet = true },
                 onClearHistory = viewModel::clearAllHistory,
                 onDismiss = { showPrivacySheet = false }
+            )
+        }
+
+        if (showSupportSheet) {
+            SupportDeveloperBottomSheet(
+                strings = strings,
+                onBrowserError = { viewModel.showMessage(strings.noBrowserMessage) },
+                onDismiss = { showSupportSheet = false }
             )
         }
     }
@@ -342,6 +365,7 @@ private fun IdleContent(
     downloadedCount: Int,
     onPickFile: () -> Unit,
     onOpenManageModels: () -> Unit,
+    onOpenSupport: () -> Unit,
     onSelectHistory: (TranslatedBookRecord) -> Unit,
     onDeleteHistory: (String) -> Unit
 ) {
@@ -468,6 +492,11 @@ private fun IdleContent(
                 )
             }
         }
+
+        SupportDeveloperBannerCard(
+            strings = strings,
+            onClick = onOpenSupport
+        )
 
         Spacer(modifier = Modifier.height(12.dp))
     }

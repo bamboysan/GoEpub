@@ -24,6 +24,7 @@ data class AppStrings(
     val language: AppLanguage,
     val appTagline: String,
     val switchLangTooltip: String,
+    val supportTooltip: String,
     val manageModelsTooltip: String,
     val privacyTooltip: String,
 
@@ -42,6 +43,19 @@ data class AppStrings(
     val recentTranslationsTitle: String,
     val chaptersWord: String,
     val deleteHistoryDesc: (String) -> String,
+
+    // Support / Donate Developer
+    val supportBannerTitle: String,
+    val supportBannerSubtitle: String,
+    val supportSheetTitle: String,
+    val supportSheetBody: String,
+    val supportSaweriaTitle: String,
+    val supportSaweriaSubtitle: String,
+    val supportKofiTitle: String,
+    val supportKofiSubtitle: String,
+    val supportThankYouNote: String,
+    val supportInAboutButton: String,
+    val noBrowserMessage: String,
 
     // Inspecting
     val inspectingTitle: String,
@@ -119,7 +133,7 @@ data class AppStrings(
     val deletePackDesc: (String) -> String,
 
     // Privacy & About Sheet
-    val aboutVersionTitle: String,
+    val aboutVersionTitleFormat: (String) -> String,
     val aboutSubtitle: String,
     val policyOnDeviceTitle: String,
     val policyOnDeviceBody: String,
@@ -154,6 +168,7 @@ data class AppStrings(
             language = AppLanguage.EN,
             appTagline = "Instant EPUB Translator",
             switchLangTooltip = "Switch App Language (EN / ID)",
+            supportTooltip = "Support Developer",
             manageModelsTooltip = "Manage Offline Language Packs",
             privacyTooltip = "Privacy & App Info",
 
@@ -171,6 +186,18 @@ data class AppStrings(
             recentTranslationsTitle = "Recent Translations",
             chaptersWord = "chapters",
             deleteHistoryDesc = { title -> "Delete $title from history" },
+
+            supportBannerTitle = "Support the Developer",
+            supportBannerSubtitle = "GoEpub is 100% free & ad-free • Buy me a coffee",
+            supportSheetTitle = "Support the Developer",
+            supportSheetBody = "GoEpub is 100% free, ad-free, and open-source. If this app helps you enjoy more books across languages, consider supporting future updates!",
+            supportSaweriaTitle = "Support via Saweria",
+            supportSaweriaSubtitle = "Indonesia • QRIS / E-Wallet (GoPay, OVO, DANA)",
+            supportKofiTitle = "Support via Ko-fi",
+            supportKofiSubtitle = "International • PayPal / Credit & Debit Card",
+            supportThankYouNote = "Thank you so much for your kindness and support!",
+            supportInAboutButton = "Support the Developer (Saweria / Ko-fi)",
+            noBrowserMessage = "No web browser app was found on this device to open the link.",
 
             inspectingTitle = "Inspecting Book Structure...",
 
@@ -241,7 +268,7 @@ data class AppStrings(
             downloadAction = "Download",
             deletePackDesc = { lang -> "Delete $lang pack" },
 
-            aboutVersionTitle = "GoEpub • Version 1.0.0",
+            aboutVersionTitleFormat = { version -> "GoEpub • Version $version" },
             aboutSubtitle = "Privacy, Data Security & Terms of Use",
             policyOnDeviceTitle = "100% On-Device Processing",
             policyOnDeviceBody = "Your entire EPUB e-book is processed and translated locally on your device using Google ML Kit On-Device Translation. Your book content is never uploaded to any external server.",
@@ -270,6 +297,7 @@ data class AppStrings(
             language = AppLanguage.ID,
             appTagline = "Penerjemah Buku EPUB Instan",
             switchLangTooltip = "Ganti Bahasa Aplikasi (EN / ID)",
+            supportTooltip = "Dukung Pengembang",
             manageModelsTooltip = "Kelola Paket Bahasa Offline",
             privacyTooltip = "Privasi & Tentang Aplikasi",
 
@@ -287,6 +315,18 @@ data class AppStrings(
             recentTranslationsTitle = "Terjemahan Terakhir",
             chaptersWord = "bab",
             deleteHistoryDesc = { title -> "Hapus riwayat $title" },
+
+            supportBannerTitle = "Dukung Pengembang",
+            supportBannerSubtitle = "GoEpub 100% gratis & bebas iklan • Traktir kopi",
+            supportSheetTitle = "Dukung Pengembang",
+            supportSheetBody = "GoEpub 100% gratis, bebas iklan, dan bersumber terbuka. Jika aplikasi ini membantu Anda membaca lebih banyak buku, Anda dapat mendukung pengembangan pembaruan berikutnya!",
+            supportSaweriaTitle = "Dukung via Saweria",
+            supportSaweriaSubtitle = "Indonesia • QRIS / E-Wallet (GoPay, OVO, DANA)",
+            supportKofiTitle = "Dukung via Ko-fi",
+            supportKofiSubtitle = "Internasional • PayPal / Kartu Kredit & Debit",
+            supportThankYouNote = "Terima kasih banyak atas apresiasi dan dukungan Anda!",
+            supportInAboutButton = "Dukung Pengembang (Saweria / Ko-fi)",
+            noBrowserMessage = "Tidak ditemukan aplikasi browser di perangkat ini untuk membuka tautan.",
 
             inspectingTitle = "Memeriksa Struktur Buku...",
 
@@ -357,7 +397,7 @@ data class AppStrings(
             downloadAction = "Unduh",
             deletePackDesc = { lang -> "Hapus paket $lang" },
 
-            aboutVersionTitle = "GoEpub • Versi 1.0.0",
+            aboutVersionTitleFormat = { version -> "GoEpub • Versi $version" },
             aboutSubtitle = "Privasi, Keamanan Data & Ketentuan Layanan",
             policyOnDeviceTitle = "100% Pemrosesan di Perangkat (On-Device)",
             policyOnDeviceBody = "Seluruh isi buku EPUB Anda diproses dan diterjemahkan langsung di perangkat menggunakan Google ML Kit On-Device Translation. Kami tidak pernah mengunggah naskah buku Anda ke server eksternal mana pun.",

@@ -22,11 +22,16 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.OpenInNew
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.CloudDownload
 import androidx.compose.material.icons.outlined.DeleteOutline
+import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.GppGood
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.LocalCafe
+import androidx.compose.material.icons.outlined.Public
+import androidx.compose.material.icons.outlined.QrCode2
 import androidx.compose.material.icons.outlined.Storage
 import androidx.compose.material.icons.outlined.VerifiedUser
 import androidx.compose.material3.ButtonDefaults
@@ -34,6 +39,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -56,12 +62,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.goepub.app.BuildConfig
 import com.goepub.app.domain.translator.GoogleTranslateManager
 import com.goepub.app.ui.i18n.AppStrings
 import com.goepub.app.ui.main.OfflineModelsUiState
+import com.goepub.app.util.AppConstants
 
 @Composable
 fun CleanSurfaceCard(
@@ -195,6 +205,233 @@ fun HeroBookIllustration(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         GoEpubBrandLogo(size = 58.dp)
+    }
+}
+
+/**
+ * Compact banner card displayed at the bottom of the home screen for supporting the developer.
+ */
+@Composable
+fun SupportDeveloperBannerCard(
+    strings: AppStrings,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        onClick = onClick,
+        shape = RoundedCornerShape(20.dp),
+        color = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.42f),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.tertiary.copy(alpha = 0.32f)),
+        modifier = modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 14.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.tertiaryContainer),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.LocalCafe,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.tertiary,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+            Spacer(modifier = Modifier.width(12.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = strings.supportBannerTitle,
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Text(
+                    text = strings.supportBannerSubtitle,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Icon(
+                imageVector = Icons.Outlined.Favorite,
+                contentDescription = null,
+                tint = Color(0xFFE11D48),
+                modifier = Modifier.size(18.dp)
+            )
+        }
+    }
+}
+
+/**
+ * Bilingual Developer Support / Donation ModalBottomSheet featuring Saweria & Ko-fi links.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SupportDeveloperBottomSheet(
+    strings: AppStrings,
+    onBrowserError: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    val context = LocalContext.current
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = sheetState,
+        containerColor = MaterialTheme.colorScheme.surface,
+        shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 24.dp)
+                .padding(bottom = 28.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(64.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.tertiaryContainer),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Favorite,
+                    contentDescription = null,
+                    tint = Color(0xFFE11D48),
+                    modifier = Modifier.size(30.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(14.dp))
+
+            Text(
+                text = strings.supportSheetTitle,
+                style = MaterialTheme.typography.headlineSmall,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = strings.supportSheetBody,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            // 1. Saweria (Indonesia - QRIS / E-Wallet)
+            DonationOptionButton(
+                icon = Icons.Outlined.QrCode2,
+                accentColor = Color(0xFFD97706),
+                accentContainerColor = Color(0xFFFEF3C7),
+                title = strings.supportSaweriaTitle,
+                subtitle = strings.supportSaweriaSubtitle,
+                onClick = {
+                    AppConstants.openExternalUrl(
+                        context = context,
+                        url = AppConstants.SAWERIA_URL,
+                        onBrowserNotFound = onBrowserError
+                    )
+                }
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // 2. Ko-fi (International - PayPal / Card)
+            DonationOptionButton(
+                icon = Icons.Outlined.Public,
+                accentColor = Color(0xFF0284C7),
+                accentContainerColor = Color(0xFFE0F2FE),
+                title = strings.supportKofiTitle,
+                subtitle = strings.supportKofiSubtitle,
+                onClick = {
+                    AppConstants.openExternalUrl(
+                        context = context,
+                        url = AppConstants.KOFI_URL,
+                        onBrowserNotFound = onBrowserError
+                    )
+                }
+            )
+
+            Spacer(modifier = Modifier.height(18.dp))
+
+            Text(
+                text = strings.supportThankYouNote,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+}
+
+@Composable
+private fun DonationOptionButton(
+    icon: ImageVector,
+    accentColor: Color,
+    accentContainerColor: Color,
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit
+) {
+    Surface(
+        onClick = onClick,
+        shape = RoundedCornerShape(18.dp),
+        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.45f),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 14.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(44.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(accentContainerColor),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = accentColor,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+            Spacer(modifier = Modifier.width(14.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(modifier = Modifier.height(2.dp))
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            Icon(
+                imageVector = Icons.AutoMirrored.Outlined.OpenInNew,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(20.dp)
+            )
+        }
     }
 }
 
@@ -356,6 +593,7 @@ fun OfflineModelsBottomSheet(
 fun PrivacyAndAboutBottomSheet(
     strings: AppStrings,
     hasHistory: Boolean,
+    onOpenSupport: () -> Unit,
     onClearHistory: () -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -380,7 +618,7 @@ fun PrivacyAndAboutBottomSheet(
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
                     Text(
-                        text = strings.aboutVersionTitle,
+                        text = strings.aboutVersionTitleFormat(BuildConfig.VERSION_NAME),
                         style = MaterialTheme.typography.titleLarge
                     )
                     Text(
@@ -416,6 +654,26 @@ fun PrivacyAndAboutBottomSheet(
                 title = strings.policyNetworkTitle,
                 body = strings.policyNetworkBody
             )
+
+            FilledTonalButton(
+                onClick = {
+                    onDismiss()
+                    onOpenSupport()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(48.dp),
+                shape = RoundedCornerShape(14.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Favorite,
+                    contentDescription = null,
+                    tint = Color(0xFFE11D48),
+                    modifier = Modifier.size(18.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(strings.supportInAboutButton)
+            }
 
             if (hasHistory) {
                 OutlinedButton(
